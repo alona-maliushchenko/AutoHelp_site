@@ -5,6 +5,20 @@
   # Редірект index.html на корінь сайту
   RewriteCond %{THE_REQUEST} /index\.html [NC]
   RewriteRule ^index\.html$ / [R=301,L]
+
+  # Дозволити доступ сканерам (Googlebot, Sucuri, Bing, тощо)
+  RewriteCond %{HTTP_USER_AGENT} ^.*(googlebot|bingbot|yandex|sucuri|facebookexternalhit|crawler|bot).*$ [NC]
+  RewriteRule .* - [L]
+</IfModule>
+
+# Загальні дозволи доступу
+<IfModule mod_authz_core.c>
+  Require all granted
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Allow from all
 </IfModule>
 
 # Налаштування кешування
